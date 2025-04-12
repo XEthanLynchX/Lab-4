@@ -64,21 +64,94 @@ public class Lab4 {
             System.out.println("3. Buy prize");
             System.out.println("4. Set holiday");
             System.out.println("5. Quit");
-            System.out.println("Your wallet has " + wallet.getTickets() + "tickets");
-            System.out.println("Enter option: ");
+            System.out.println("Your wallet has " + wallet.getTickets() + " tickets");
+            System.out.print("Enter option: ");
             int input = scan.nextInt();
             System.out.println();
 
             switch(input){
                 case 1:
-                    System.out.println("Add How Many tickets");
-                    int ticketsadded = scan.nextInt();
-                    wallet.addTicket(ticketsadded);
+                    System.out.print("Add How Many tickets");
+                    int addTickets = scan.nextInt();
+                    wallet.addTicket(addTickets);
+                    break;
 
                 case 2:
-                    System.out.println("Set ticket balance to: ");
-                    int ticketsadded
+                    System.out.print("Set ticket balance to: ");
+                    int setTickets = scan.nextInt();
+                    wallet.setTickets(setTickets);
+                    break;
+
+                case 3:
+                    System.out.println("T-shirt (150 tickets)");
+                    System.out.println("Sun hat (350 tickets)");
+                    System.out.println("Sneakers (600 tickets)");
+                    System.out.print("Buy which prize? ");
+
+                    int prizeNum = scan.nextInt();
+                    int price = 0;
+                    int tshirtPrice = 150;
+                    int sunhatPrice = 350;
+                    int sneakers = 600;
+
+
+                    String prizeitem = "";
+                    switch(prizeNum){
+                        case 1:
+                            if (wallet.getHoldiday()){
+                                price = tshirtPrice /2;
+                                prizeitem = "T-shirt";
+                            }
+                            else {
+                                price = tshirtPrice;
+                                prizeitem = "T-shirt";
+                            }
+                            break;
+                        case 2:
+                            if (wallet.getHoldiday()){
+                                price = tshirtPrice /2;
+                                prizeitem = "sun hat";
+                            }
+                            else {
+                                price = sunhatPrice;
+                                prizeitem = "sun hat";
+                            }
+                            break;
+                        case 3:
+                            if(wallet.getHoldiday()){
+                                price = sneakers;
+                                prizeitem = "sneakers";
+                            }
+                            else {
+                                price = 600;
+                                prizeitem = "sneakers";
+                            }
+                            break;
+                    }
+                    if (wallet.removeTickets(price)){
+                        System.out.println("Bought "+ prizeitem + " for " + price + " tickets");
+                }
+                    else{
+                        System.out.println("Not enough tickets to buy " + prizeitem);
+                    }
+                    break;
+                case 4:
+                    wallet.setHoliday();
+                    if (wallet.getHoldiday()){
+                        System.out.println("It is now a holiday");
+                    }
+                    else{
+                        System.out.println("It is no longer a holiday");
+                    }
+                    break;
+
+                case 5:
+                    running = false;
+                    System.out.println("Shutting off...");
+                    scan.close();
+
             }
+
 
 
         }
